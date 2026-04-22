@@ -136,24 +136,20 @@ describe("analyzeDocuments", () => {
     expect(analysis.documents[0]?.anomalies.some((anomaly) => anomaly.type === "CNPJ_DIVERGENT")).toBe(true);
   });
 
-  it("flags supplier CNPJ values with invalid checksum", () => {
-    const baseDocument = makeSyntheticDocument("DOC_CNPJ_INVALID.txt", "Fornecedor Beta", 4200);
-    const invalidChecksumDocument: ParsedUploadedDocument = {
-      ...baseDocument,
-      normalized: {
-        ...baseDocument.normalized,
-        supplierCnpjRaw: "11.111.111/1111-11",
-        supplierCnpjNormalized: "11111111111111",
-      },
-    };
+  it("does not flood the synthetic corpus with non-brief soft rules", async () => {
+    const currentDocuments = await Promise.all([
+      parseFixture("DOC_0001.txt"),
+      parseFixture("DOC_0003.txt"),
+    ]);
 
-    const analysis = analyzeDocuments({ currentDocuments: [invalidChecksumDocument] });
-    const anomaly = analysis.documents[0]?.anomalies.find(
-      (item) => item.type === "CNPJ_CHECKSUM_INVALID",
-    );
+    const analysis = analyzeDocuments({ currentDocuments });
+    const noisyTypes = new Set(["CNPJ_CHECKSUM_INVALID", "DOCUMENT_NUMBER_PREFIX_MISMATCH"]);
 
-    expect(anomaly).toBeDefined();
-    expect(anomaly?.evidence.supplierCnpj).toBe("11111111111111");
+    expect(
+      analysis.documents.flatMap((document) =>
+        document.anomalies.filter((anomaly) => noisyTypes.has(anomaly.type)),
+      ),
+    ).toEqual([]);
   });
 
   it("flags invoice dates later than payment dates", async () => {
@@ -250,17 +246,4 @@ describe("analyzeDocuments", () => {
     expect(analysis.documents[0]?.anomalies.some((anomaly) => anomaly.type === "BANK_ATYPICAL")).toBe(false);
   });
 
-  it("flags document numbers whose prefix does not match document type", () => {
-    const currentDocuments = [
-      makeSyntheticDocument("RC-1200.txt", "Fornecedor Alpha", 300),
-    ];
-
-    const analysis = analyzeDocuments({ currentDocuments });
-    const mismatch = analysis.documents[0]?.anomalies.find(
-      (anomaly) => anomaly.type === "DOCUMENT_NUMBER_PREFIX_MISMATCH",
-    );
-
-    expect(mismatch).toBeDefined();
-    expect(mismatch?.evidence.expectedPrefix).toBe("NF-");
-  });
 });

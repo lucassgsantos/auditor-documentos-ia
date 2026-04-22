@@ -198,7 +198,7 @@ Bytes recebidos (base64)
               ▼
          Sessão finalizada → analyzeDocuments()
          - Constrói perfil de referência (baseline histórico)
-         - Aplica 15 regras de anomalia
+         - Aplica 13 regras de anomalia
          - Gera audit_entries por arquivo e por anomalia
 ```
 
@@ -265,17 +265,15 @@ A detecção é feita em `src/lib/documents/anomalies.ts` após a sessão ser fi
 | 2 | `DUPLICATE_DOCUMENT` | Mesmo número de NF + mesmo fornecedor | Alto | ALTA |
 | 3 | `SUPPLIER_WITHOUT_HISTORY` | Fornecedor nunca visto no baseline | Alto | ALTA |
 | 4 | `CNPJ_DIVERGENT` | CNPJ difere do canônico do fornecedor | Alto | ALTA |
-| 5 | `CNPJ_CHECKSUM_INVALID` | CNPJ sem 14 dígitos válidos ou com dígitos verificadores inválidos | Alto | ALTA |
-| 6 | `INVOICE_AFTER_PAYMENT` | DATA_EMISSAO_NF > DATA_PAGAMENTO | Alto | ALTA |
-| 7 | `APPROVER_UNRECOGNIZED` | Aprovador fora da lista conhecida | Médio | ALTA |
-| 8 | `STATUS_INCONSISTENT` | CANCELADO com DATA_PAGAMENTO preenchida | Médio | ALTA |
-| 9 | `VALUE_OUTLIER` | Valor fora do IQR ×1.5 OU z-score ≥ 2 (≥4 amostras) | Médio | ALTA / MÉDIA / BAIXA |
-| 10 | `STATUS_MALFORMED` | STATUS fora do domínio conhecido | Baixo | ALTA |
-| 11 | `HASH_MALFORMED` | Hash de verificação não bate com padrão NLC* | Baixo | ALTA |
-| 12 | `FILENAME_VERSIONED` | Nome do arquivo contém `_v{N}` (reprocessamento) | Baixo | ALTA |
-| 13 | `OBSERVATION_SUSPICIOUS` | Campo OBSERVACAO contém padrão suspeito | Baixo | MÉDIA |
-| 14 | `BANK_ATYPICAL` | Banco atípico para o fornecedor, apenas quando já existe outra divergência no documento | Baixo | BAIXA |
-| 15 | `DOCUMENT_NUMBER_PREFIX_MISMATCH` | Prefixo do número não condiz com tipo documental | Baixo | ALTA |
+| 5 | `INVOICE_AFTER_PAYMENT` | DATA_EMISSAO_NF > DATA_PAGAMENTO | Alto | ALTA |
+| 6 | `APPROVER_UNRECOGNIZED` | Aprovador fora da lista conhecida | Médio | ALTA |
+| 7 | `STATUS_INCONSISTENT` | CANCELADO com DATA_PAGAMENTO preenchida | Médio | ALTA |
+| 8 | `VALUE_OUTLIER` | Valor fora do IQR ×1.5 OU z-score ≥ 2 (≥4 amostras) | Médio | ALTA / MÉDIA / BAIXA |
+| 9 | `STATUS_MALFORMED` | STATUS fora do domínio conhecido | Baixo | ALTA |
+| 10 | `HASH_MALFORMED` | Hash de verificação não bate com padrão NLC* | Baixo | ALTA |
+| 11 | `FILENAME_VERSIONED` | Nome do arquivo contém `_v{N}` (reprocessamento) | Baixo | ALTA |
+| 12 | `OBSERVATION_SUSPICIOUS` | Campo OBSERVACAO contém padrão suspeito | Baixo | MÉDIA |
+| 13 | `BANK_ATYPICAL` | Banco atípico para o fornecedor, apenas quando já existe outra divergência no documento | Baixo | BAIXA |
 
 Cada anomalia registra: `ruleId`, `severity`, `confidence`, `message` e `evidence` (campos específicos que dispararam a regra).
 

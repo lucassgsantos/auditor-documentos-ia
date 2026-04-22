@@ -67,14 +67,6 @@ const SUSPICIOUS_OBSERVATION_PATTERNS = [
   /encerrado/i,
 ];
 
-const DOCUMENT_PREFIX_BY_TYPE: Record<string, string> = {
-  NOTA_FISCAL: "NF-",
-  RECIBO: "RC-",
-  FATURA: "FT-",
-  BOLETO: "BL-",
-  CONTRATO: "CT-",
-};
-
 export function buildReferenceProfile(
   documents: ParsedUploadedDocument[],
   options?: { minimumApproverOccurrences?: number },
@@ -256,28 +248,6 @@ export function analyzeDocuments({
       }
     }
 
-    const expectedDocumentPrefix = getExpectedDocumentPrefix(
-      document.normalized.documentType,
-    );
-    if (
-      expectedDocumentPrefix &&
-      document.normalized.documentNumber &&
-      !document.normalized.documentNumber.startsWith(expectedDocumentPrefix)
-    ) {
-      anomalies.push({
-        type: "DOCUMENT_NUMBER_PREFIX_MISMATCH",
-        ruleId: "document-number-prefix-mismatch",
-        severity: "low",
-        confidence: "HIGH",
-        message: "Prefixo do número do documento não corresponde ao tipo informado.",
-        evidence: {
-          documentType: document.normalized.documentType,
-          documentNumber: document.normalized.documentNumber,
-          expectedPrefix: expectedDocumentPrefix,
-        },
-      });
-    }
-
     if (supplierName) {
       const supplierSeenOnlyHere = historicalDocuments.length === 0
         ? (currentSupplierCounts.get(supplierName) ?? 0) === 1
@@ -295,23 +265,6 @@ export function analyzeDocuments({
           },
         });
       }
-    }
-
-    if (
-      document.normalized.supplierCnpjNormalized &&
-      !isValidCnpj(document.normalized.supplierCnpjNormalized)
-    ) {
-      anomalies.push({
-        type: "CNPJ_CHECKSUM_INVALID",
-        ruleId: "supplier-cnpj-checksum-invalid",
-        severity: "high",
-        confidence: "HIGH",
-        message: "CNPJ do fornecedor possui digitos verificadores invalidos.",
-        evidence: {
-          supplierName,
-          supplierCnpj: document.normalized.supplierCnpjNormalized,
-        },
-      });
     }
 
     if (
@@ -529,14 +482,6 @@ function buildDuplicateKey(document: ParsedUploadedDocument) {
   return `${document.normalized.supplierName}::${document.normalized.documentNumber}`;
 }
 
-function getExpectedDocumentPrefix(documentType: string | null) {
-  if (!documentType) {
-    return null;
-  }
-
-  return DOCUMENT_PREFIX_BY_TYPE[documentType.trim().toUpperCase()] ?? null;
-}
-
 interface ValueOutlierSignal {
   method: "iqr" | "zscore";
   confidence: "HIGH" | "MEDIUM" | "LOW";
@@ -596,33 +541,4 @@ function quantile(sortedValues: number[], percentile: number) {
   }
 
   return lowerValue + (upperValue - lowerValue) * (position - lowerIndex);
-}
-
-function isValidCnpj(cnpj: string) {
-  if (!/^\d{14}$/.test(cnpj)) {
-    return false;
-  }
-
-  if (/^(\d)\1{13}$/.test(cnpj)) {
-    return false;
-  }
-
-  const digits = cnpj.split("").map((digit) => Number(digit));
-
-  const firstVerifier = calculateCnpjVerifier(digits.slice(0, 12), [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]);
-  const secondVerifier = calculateCnpjVerifier(
-    [...digits.slice(0, 12), firstVerifier],
-    [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2],
-  );
-
-  return firstVerifier === digits[12] && secondVerifier === digits[13];
-}
-
-function calculateCnpjVerifier(baseDigits: number[], weights: number[]) {
-  const sum = baseDigits.reduce(
-    (accumulator, digit, index) => accumulator + digit * (weights[index] ?? 0),
-    0,
-  );
-  const remainder = sum % 11;
-  return remainder < 2 ? 0 : 11 - remainder;
 }
