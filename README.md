@@ -23,7 +23,7 @@ Aplicação web para ingestão, extração e auditoria de documentos financeiros
 
 | Entregável | Link |
 |---|---|
-| Aplicação pública | _adicionar URL após deploy_ |
+| Aplicação pública | https://auditor-documentos-ia.vercel.app |
 | Repositório GitHub | https://github.com/lucassgsantos/auditor-documentos-ia |
 | Dashboard Power BI | _adicionar link ou `.pbix` na entrega final_ |
 | Relatório de anomalias | [`docs/relatorio-anomalias.md`](docs/relatorio-anomalias.md) |
