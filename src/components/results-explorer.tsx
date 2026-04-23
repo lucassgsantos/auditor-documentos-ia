@@ -192,16 +192,15 @@ export function ResultsExplorer({
         <div className="flex items-start justify-between gap-4">
           <p className="folio-mark">Dossiê de Lote · Rev. {session.id.slice(0, 6).toUpperCase()}</p>
           <p className="folio-mark">
-            {session.status === "finalized" ? "§ Encerrado" : "§ Em curso"}
+            {session.status === "finalized" ? "Encerrado" : "Em curso"}
           </p>
         </div>
 
         <div className="mt-5 flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
           <div className="min-w-0 space-y-3">
-            <p className="section-kicker">Comando do lote</p>
+            <p className="section-kicker">Resumo do lote</p>
             <h1 className="display-title text-[2.4rem] leading-[0.98] sm:text-[2.9rem]">
               Lote{" "}
-              <span className="editorial-accent">№</span>{" "}
               <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                 {session.id.slice(0, 8)}
               </span>
@@ -401,10 +400,10 @@ export function ResultsExplorer({
               <h2
                 className="mt-2 text-[1.6rem] leading-tight text-[var(--text)]"
                 style={{
-                  fontFamily: "var(--font-fraunces)",
+                  fontFamily: "var(--font-display)",
                   fontWeight: 600,
                   fontVariationSettings: "'opsz' 36",
-                  letterSpacing: "-0.02em",
+                  letterSpacing: "0",
                 }}
               >
                 Documentos revisados
@@ -429,7 +428,7 @@ export function ResultsExplorer({
               helper="Reduza a busca, troque a severidade ou volte para todos os achados."
               action={
                 <button
-                  className="action-secondary rounded-[14px] px-3 py-2 text-sm font-semibold"
+                  className="action-secondary rounded-[6px] px-3 py-2 text-sm font-semibold"
                   onClick={() => {
                     setSearch("");
                     setSelectedAnomaly("ALL");
@@ -602,7 +601,7 @@ export function ResultsExplorer({
           )}
         </section>
 
-        <aside className="surface-panel rounded-[18px] px-4 py-4">
+        <aside className="surface-panel rounded-[10px] px-4 py-4">
           <p className="section-kicker">Inspeção e evidências</p>
 
           {selectedDocument ? (
@@ -699,7 +698,7 @@ export function ResultsExplorer({
                     ))}
                   </div>
                 ) : (
-                  <div className="surface-subtle rounded-[14px] px-3 py-3">
+                  <div className="surface-subtle rounded-[8px] px-3 py-3">
                     <p className="text-sm leading-6 text-[var(--text-muted)]">
                       Nenhuma divergência associada ao documento selecionado.
                     </p>
@@ -740,7 +739,7 @@ export function ResultsExplorer({
               </PanelSection>
             </div>
           ) : (
-            <div className="surface-subtle mt-4 flex items-start gap-3 rounded-[16px] px-4 py-4">
+            <div className="surface-subtle mt-4 flex items-start gap-3 rounded-[8px] px-4 py-4">
               <AlertTriangle className="mt-0.5 size-4 text-[var(--danger)]" />
               <p className="text-sm leading-6 text-[var(--text-muted)]">
                 Ajuste os filtros ou selecione um documento na tabela.
@@ -776,9 +775,9 @@ function CommandCounter({
   value: number | string;
 }) {
   return (
-    <div className="command-counter rounded-[14px] px-3 py-3">
+    <div className="command-counter rounded-[8px] px-3 py-3">
       <p className="table-meta text-[var(--command-muted)]">{label}</p>
-      <p className="mt-2 text-lg font-semibold tracking-[-0.02em] text-[var(--command-text)]">
+      <p className="mt-2 text-lg font-semibold text-[var(--command-text)]">
         {value}
       </p>
     </div>

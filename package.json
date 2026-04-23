@@ -11,7 +11,9 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "seed:baseline": "tsx src/scripts/seed-baseline.ts"
+    "seed:baseline": "tsx src/scripts/seed-baseline.ts",
+    "export:powerbi": "tsx src/scripts/export-power-bi.ts",
+    "build:pbit": "tsx src/scripts/build-powerbi-template.ts"
   },
   "dependencies": {
     "@google/genai": "^1.50.1",

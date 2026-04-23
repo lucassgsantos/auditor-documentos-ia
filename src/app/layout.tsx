@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Fraunces, JetBrains_Mono, Public_Sans } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, Newsreader } from "next/font/google";
 
 import "./globals.css";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
   weight: "variable",
   axes: ["opsz"],
@@ -12,15 +12,15 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
-const publicSans = Public_Sans({
-  variable: "--font-public-sans",
+const ibmPlexSans = IBM_Plex_Sans({
+  variable: "--font-ibm-plex-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
+const ibmPlexMono = IBM_Plex_Mono({
+  variable: "--font-ibm-plex-mono",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   display: "swap",
@@ -41,7 +41,7 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       data-theme="dark"
-      className={`${fraunces.variable} ${publicSans.variable} ${jetbrainsMono.variable} h-full`}
+      className={`${newsreader.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable} h-full`}
     >
       <body className="min-h-full bg-[var(--canvas)] text-[var(--text)] antialiased">
         {children}

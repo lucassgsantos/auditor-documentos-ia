@@ -211,7 +211,7 @@ export function UploadConsole({
     <section className="surface-panel overflow-hidden rounded-[10px]">
       <div className="surface-command-soft border-b border-[var(--border)] px-6 py-6">
         <div className="flex items-start justify-between gap-4">
-          <p className="folio-mark">Dock · Ingestão</p>
+          <p className="folio-mark">Recebimento</p>
           <p className="folio-mark">F-01</p>
         </div>
 
@@ -223,10 +223,9 @@ export function UploadConsole({
             </h2>
             <p
               className="mt-3 max-w-2xl text-sm leading-6 text-[var(--text-muted)]"
-              style={{ fontFamily: "var(--font-fraunces)", fontStyle: "italic" }}
+              style={{ fontFamily: "var(--font-display)", fontStyle: "italic" }}
             >
-              Selecione arquivos, abra a revisão e deixe a trilha de evidências pronta
-              para inspeção e exportação.
+              Escolha o lote, confirme os arquivos e abra uma revisão rastreável.
             </p>
           </div>
 
@@ -289,14 +288,14 @@ export function UploadConsole({
               </div>
 
               <div className="min-w-0 flex-1">
-                <p className="section-kicker">Dock de ingestão</p>
+                <p className="section-kicker">Área de recebimento</p>
                 <p
                   className="mt-2 text-[1.5rem] leading-tight text-[var(--text)]"
                   style={{
-                    fontFamily: "var(--font-fraunces)",
+                    fontFamily: "var(--font-display)",
                     fontWeight: 600,
                     fontVariationSettings: "'opsz' 48",
-                    letterSpacing: "-0.025em",
+                    letterSpacing: "0",
                   }}
                 >
                   Selecione um <em className="editorial-accent">.zip</em> ou os{" "}
@@ -304,10 +303,9 @@ export function UploadConsole({
                 </p>
                 <p
                   className="mt-3 max-w-2xl text-sm leading-6 italic text-[var(--text-muted)]"
-                  style={{ fontFamily: "var(--font-fraunces)" }}
+                  style={{ fontFamily: "var(--font-display)" }}
                 >
-                  O arquivo compactado é aberto localmente antes do envio, preservando a
-                  trilha de recebimento.
+                  ZIPs são abertos no navegador; somente os TXT entram na revisão.
                 </p>
 
                 <div className="mt-4 flex flex-wrap gap-2">
@@ -345,7 +343,7 @@ export function UploadConsole({
               <div className="surface-subtle rounded-[6px] px-4 py-3">
                 <p className="subsection-label">Recebimento</p>
                 <p className="mt-2 text-sm leading-6 text-[var(--text-muted)]">
-                  ZIP e TXT, lote único, ordenação por arquivo e revisão contínua.
+                  ZIP ou TXT, ordenação por nome e limite do lote respeitado.
                 </p>
               </div>
             </div>
@@ -382,7 +380,7 @@ export function UploadConsole({
                 </div>
               ))}
               {selectedFileNames.length > 6 ? (
-                <p className="text-xs italic text-[var(--text-muted)]" style={{ fontFamily: "var(--font-fraunces)" }}>
+                <p className="text-xs italic text-[var(--text-muted)]" style={{ fontFamily: "var(--font-display)" }}>
                   +{selectedFileNames.length - 6} arquivos adicionais no lote.
                 </p>
               ) : null}
@@ -452,18 +450,6 @@ export function UploadConsole({
             })}
           </div>
 
-          {isProcessing ? (
-            <div className="ticker mt-3" aria-hidden>
-              <div className="ticker-track">
-                <span className="ticker-item">Extraindo campos normalizados</span>
-                <span className="ticker-item">Comparando com baseline histórica</span>
-                <span className="ticker-item">Avaliando hash de verificação</span>
-                <span className="ticker-item">Registrando evidências na trilha</span>
-                <span className="ticker-item">Validando CNPJ e aprovador</span>
-                <span className="ticker-item">Detectando valores fora da faixa</span>
-              </div>
-            </div>
-          ) : null}
         </div>
 
         {progress.total > 0 && stage !== "done" && stage !== "error" ? (
@@ -496,7 +482,7 @@ export function UploadConsole({
             {progress.failed > 0 ? (
               <p
                 className="mt-2 text-xs italic text-[var(--danger)]"
-                style={{ fontFamily: "var(--font-fraunces)" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 {progress.failed} {progress.failed === 1 ? "arquivo falhou" : "arquivos falharam"}{" "}
                 e a revisão continua com o restante.
@@ -511,7 +497,7 @@ export function UploadConsole({
               <p className="section-kicker">Acompanhamento</p>
               <p
                 className="text-[15px] leading-6 text-[var(--text)]"
-                style={{ fontFamily: "var(--font-fraunces)", fontStyle: "italic" }}
+                style={{ fontFamily: "var(--font-display)", fontStyle: "italic" }}
               >
                 {statusMessage}
               </p>
@@ -549,7 +535,7 @@ export function UploadConsole({
               </p>
               <p
                 className="mt-2 break-words text-[15px] leading-6 text-[var(--text-muted)]"
-                style={{ fontFamily: "var(--font-fraunces)", fontStyle: "italic" }}
+                style={{ fontFamily: "var(--font-display)", fontStyle: "italic" }}
               >
                 {statusMessage}
               </p>
@@ -586,7 +572,7 @@ export function UploadConsole({
             </p>
             <p
               className="mt-2 text-[15px] leading-6 text-[var(--text-muted)]"
-              style={{ fontFamily: "var(--font-fraunces)", fontStyle: "italic" }}
+              style={{ fontFamily: "var(--font-display)", fontStyle: "italic" }}
             >
               Verifique o <code className="font-mono text-[12px] text-[var(--text)]">DATABASE_URL</code>{" "}
               e a chave do provedor antes de abrir uma revisão completa.
@@ -607,11 +593,11 @@ function SnapshotCard({ label, value }: { label: string; value: number }) {
       <p
         className="mt-2 text-[1.9rem] leading-none text-[var(--text)]"
         style={{
-          fontFamily: "var(--font-fraunces)",
+          fontFamily: "var(--font-display)",
           fontWeight: 600,
           fontVariationSettings: "'opsz' 48",
           fontVariantNumeric: "tabular-nums lining-nums",
-          letterSpacing: "-0.025em",
+          letterSpacing: "0",
         }}
       >
         {value}

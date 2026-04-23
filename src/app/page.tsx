@@ -80,22 +80,19 @@ export default async function Home() {
       <div className="stagger-group space-y-5">
         <header className="surface-command rounded-[10px] px-6 py-7 sm:px-8 sm:py-8">
           <div className="flex items-start justify-between gap-4">
-            <p className="folio-mark">Dossiê aberto · PT-BR</p>
+            <p className="folio-mark">Dossiê IA · PT-BR</p>
             <p className="folio-mark">{folioNumber}</p>
           </div>
 
           <div className="mt-6 flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
             <div className="max-w-3xl space-y-4">
               <p className="section-kicker">Mesa de revisão documental</p>
-              <h1 className="display-title text-[2.6rem] sm:text-[3.4rem] xl:text-[3.9rem]">
-                Central de revisão
-                <br />
-                <span className="editorial-accent">&amp;</span>{" "}
-                evidência auditável.
+              <h1 className="display-title text-[2.5rem] sm:text-[3.1rem] xl:text-[3.6rem]">
+                Central de revisão documental
               </h1>
               <p className="max-w-2xl text-sm leading-6 text-[var(--command-muted)]">
-                Lote, campos extraídos e divergências numa mesma mesa de trabalho —
-                com exportação pronta para auditoria e BI.
+                Receba o lote, acompanhe a leitura e revise achados com uma trilha
+                clara para auditoria e exportação.
               </p>
             </div>
 
@@ -140,8 +137,8 @@ export default async function Home() {
                   <p className="section-kicker section-kicker-dossier">
                     Referência histórica
                   </p>
-                  <p className="dossier-ink-muted mt-2 text-[14px] leading-6 italic" style={{ fontFamily: "var(--font-fraunces)" }}>
-                    Base ativa para comparação de fornecedor, documento e histórico do lote.
+                  <p className="dossier-ink-muted mt-2 text-[14px] leading-6 italic" style={{ fontFamily: "var(--font-display)" }}>
+                    Base usada para comparar fornecedores, documentos e histórico do lote.
                   </p>
                 </div>
                 <StatusPill surface="dossier" tone={latestBaseline ? "success" : "warning"}>
@@ -215,9 +212,9 @@ export default async function Home() {
               <p className="section-kicker">Fluxo do lote</p>
               <p
                 className="mt-2 text-sm italic text-[var(--text-muted)]"
-                style={{ fontFamily: "var(--font-fraunces)" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
-                Quatro estágios, uma única trilha rastreável.
+                Quatro etapas, uma trilha rastreável.
               </p>
             </div>
             <span className="folio-mark">Fluxo IV-STG</span>

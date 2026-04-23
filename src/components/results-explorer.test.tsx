@@ -94,7 +94,7 @@ describe("ResultsExplorer", () => {
         name: /abc12345/i,
       }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/comando do lote/i)).toBeInTheDocument();
+    expect(screen.getByText(/resumo do lote/i)).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: /resultados.*xlsx/i }),
     ).toBeInTheDocument();

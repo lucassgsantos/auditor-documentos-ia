@@ -1,0 +1,11 @@
+{
+  "sessionId": "8c399677-781a-45e9-800a-45ea93cff0d3",
+  "label": "baseline-seed-2026-04-22T00:45:52.820Z",
+  "totalFiles": 1001,
+  "processedFiles": 1001,
+  "anomalyCount": 193,
+  "startedAt": "2026-04-22T00:45:53.485Z",
+  "finishedAt": "2026-04-22T00:47:56.718Z",
+  "auditEntryCount": 1194,
+  "exportedAt": "2026-04-22T01:04:29.261Z"
+}

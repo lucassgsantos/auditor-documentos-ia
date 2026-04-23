@@ -25,7 +25,8 @@ Aplicação web para ingestão, extração e auditoria de documentos financeiros
 |---|---|
 | Aplicação pública | https://auditor-documentos-ia.vercel.app |
 | Repositório GitHub | https://github.com/lucassgsantos/auditor-documentos-ia |
-| Dashboard Power BI | _adicionar link ou `.pbix` na entrega final_ |
+| Dashboard Power BI | [`docs/power-bi/auditoria.pbix`](docs/power-bi/auditoria.pbix) + [`dashboard.html`](docs/power-bi/dashboard.html) |
+| Guia Power BI | [`docs/power-bi-handoff.md`](docs/power-bi-handoff.md) |
 | Relatório de anomalias | [`docs/relatorio-anomalias.md`](docs/relatorio-anomalias.md) |
 
 ---
@@ -361,3 +362,17 @@ npx playwright test tests/e2e/home.spec.ts tests/e2e/intake-flow.spec.ts
 Cobertura de testes inclui: parser de documentos, extração AI, detecção de anomalias, builders de export, e componentes de UI.
 
 Pipeline CI (GitHub Actions): `.github/workflows/web-ci.yml` executa lint, testes unitários, build e suíte E2E com Playwright (Chromium).
+
+---
+
+## Power BI
+
+Os artefatos de BI ficam versionados em [`docs/power-bi`](docs/power-bi):
+
+- [`auditor-documentos.pbit`](docs/power-bi/auditor-documentos.pbit): template do relatório com modelo, consultas, medidas DAX e página base.
+- [`auditoria.pbix`](docs/power-bi/auditoria.pbix): arquivo Power BI final para abrir/publicar no Power BI Desktop/Service.
+- [`results.xlsx`](docs/power-bi/results.xlsx): base principal do corpus analisado, com aba de resumo por anomalia.
+- [`audit.xlsx`](docs/power-bi/audit.xlsx): log exportável de auditoria, com eventos de processamento e regras acionadas.
+- [`dashboard.html`](docs/power-bi/dashboard.html): leitura navegável dos mesmos dados para conferência rápida sem Power BI Desktop.
+
+Para publicar no Power BI Service, abra o `.pbit` no Power BI Desktop, informe a pasta `docs/power-bi` como `SourceFolder`, salve como `.pbix` e publique no workspace. O passo a passo completo está em [`docs/power-bi-handoff.md`](docs/power-bi-handoff.md).

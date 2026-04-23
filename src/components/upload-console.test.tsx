@@ -43,7 +43,7 @@ describe("UploadConsole", () => {
         name: /receber lote/i,
       }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/dock de ingestão/i)).toBeInTheDocument();
+    expect(screen.getByText(/área de recebimento/i)).toBeInTheDocument();
     expect(screen.getByText(/saídas prontas/i)).toBeInTheDocument();
   });
 
